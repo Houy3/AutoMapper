@@ -1,4 +1,4 @@
-package os.memorandum.core;
+package os.memorandum;
 
 //import java.util.List;
 //import java.util.Optional;

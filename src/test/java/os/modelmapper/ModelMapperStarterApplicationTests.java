@@ -5,19 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
+import os.memorandum.AutoMapper;
+import os.memorandum.MapConverter;
 import os.memorandum.converters.ConcatConverter;
 import os.memorandum.converters.RecursiveConverter;
 import os.memorandum.converters.SimpleConverter;
-import os.memorandum.core.AutoMapper;
-import os.memorandum.core.MapConverter;
-import os.memorandum.core.SimpleAutoMapper;
+import os.memorandum.reflection.ReflectionUtils;
+
+import java.lang.reflect.Field;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static os.memorandum.Configuration.NULL;
 
 
 class ModelMapperStarterApplicationTests {
 
-	AutoMapper autoMapper = new SimpleAutoMapper();
+	AutoMapper autoMapper = new AutoMapper();
 
 	@Data
 	@Builder
@@ -74,6 +77,19 @@ class ModelMapperStarterApplicationTests {
 		assertThat(testTo.getStringNormalName()).isEqualTo(testFrom.getStringOtherName());
 		assertThat(testTo.getInt1()).isEqualTo(testFrom.getInt1());
 
+	}
+
+	public static class InnerTest {
+		@MapConverter()
+		private String string = "df";
+
+	}
+	@Test
+	void inner() {
+		Field field = ReflectionUtils.getField(InnerTest.class, "string");
+		MapConverter mapConverter = field.getAnnotation(MapConverter.class);
+
+		assertThat(mapConverter.converter()).isEqualTo(NULL);
 	}
 
 
@@ -138,9 +154,6 @@ class ModelMapperStarterApplicationTests {
 	@Test
 	void mainTestVersion() {
 
-//		List list = new ArrayList<>();
-//
-//		List list2 = list.stream().toList();
 
 
 	}

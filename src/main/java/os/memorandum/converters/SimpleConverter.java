@@ -1,6 +1,6 @@
 package os.memorandum.converters;
 
-import os.memorandum.core.Converter;
+import os.memorandum.Converter;
 
 public class SimpleConverter implements Converter {
 
